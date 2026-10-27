@@ -2,7 +2,7 @@ import { PaymentBadge, SlipUploader, StatusTracker, BankDetailsCard } from "@/co
 import { formatLKR } from "@/lib/store";
 import type { TrackedOrder } from "@/lib/queries";
 
-export function OrderCard({ o, onChange }: { o: TrackedOrder; onChange?: () => void }) {
+export function OrderCard({ o, onChange }: { o: TrackedOrder; onChange?: (() => void) | undefined }) {
   const needsSlip = o.payment_method === "bank" && (o.payment_status === "pending" || o.payment_status === "rejected");
   return (
     <article className="rounded-2xl border border-border bg-card p-6 shadow-card">

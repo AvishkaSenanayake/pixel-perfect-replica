@@ -80,7 +80,10 @@ function Checkout() {
       p_payment_method: method,
     });
     setBusy(false);
-    if (error || !data) return toast.error(error?.message ?? "Could not place order");
+    if (error || !data) {
+      toast.error(error?.message ?? "Could not place order");
+      return;
+    }
     clear();
     navigate({ to: "/order/$code", params: { code: data }, search: { phone: form.phone.replace(/\s/g, "") } });
   };

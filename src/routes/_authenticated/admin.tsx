@@ -187,7 +187,10 @@ function OrderDialog({ order, onClose, onChanged }: { order: AdminOrder | null; 
     setBusy(true);
     const { error } = await fn();
     setBusy(false);
-    if (error) return toast.error(error.message);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
     toast.success(msg);
     onChanged();
   };

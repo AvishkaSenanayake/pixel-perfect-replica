@@ -68,7 +68,7 @@ export function BankDetailsCard() {
                   type="button"
                   aria-label="Copy account number"
                   onClick={() => {
-                    navigator.clipboard.writeText(v.replace(/\s/g, ""));
+                    navigator.clipboard.writeText((v ?? "").replace(/\s/g, ""));
                     toast.success("Account number copied");
                   }}
                   className="text-muted-foreground hover:text-foreground"
@@ -91,7 +91,7 @@ export function SlipUploader({
 }: {
   code: string;
   phone: string;
-  onDone?: () => void;
+  onDone?: (() => void) | undefined;
 }) {
   const ref = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
@@ -99,7 +99,10 @@ export function SlipUploader({
 
   async function handle(file?: File) {
     if (!file) return;
-    if (file.size > 10 * 1024 * 1024) return toast.error("File must be under 10MB");
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("File must be under 10MB");
+      return;
+    }
     setBusy(true);
     try {
       await uploadSlip(code, phone, file);
